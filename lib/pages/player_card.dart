@@ -1,13 +1,9 @@
-import 'dart:async';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:smash_tracker/pages/set_count_storage.dart';
+import 'package:smash_tracker/models/player_model.dart';
 
 class PlayerCard extends StatefulWidget {
-  final SetCountStorage setCountStorage;
 
-  PlayerCard({Key key, @required this.setCountStorage}) : super (key: key);
+  PlayerCard({Key key}) : super (key: key);
 
   @override
   _PlayerCardState createState() => _PlayerCardState();
@@ -15,70 +11,44 @@ class PlayerCard extends StatefulWidget {
 
 class _PlayerCardState extends State<PlayerCard> {
 
-  int winCount;
-  int loseCount;
-
   @override
   void initState() {
     super.initState();
-    widget.setCountStorage.readSetCount().then((value) {
-      setState(() {
-        winCount = value;
-      });
-    });
-  }
-
-  Future<File> _incrementWin() {
-    setState(() {
-      winCount++;
-    });
-
-    return widget.setCountStorage.writeSetCount(winCount);
-  }
-
-  Future<File> _resetCounters() {
-    setState(() {
-      winCount = 0;
-      loseCount = 0;
-    });
-
-    return widget.setCountStorage.writeSetCount(winCount);
   }
 
   @override
   Widget build(BuildContext context) {
+
+    Player player = ModalRoute.of(context).settings.arguments;
+
     return Scaffold(
       backgroundColor: Colors.grey[900],
-      appBar: AppBar(
-        title: Text('Player ID Card'),
-        centerTitle: true,
-        backgroundColor: Colors.grey[850],
-        elevation: 0.0,
-      ),
+//      appBar: AppBar(
+//        title: Text('Player ID Card'),
+//        centerTitle: true,
+//        backgroundColor: Colors.grey[850],
+//        elevation: 0.0,
+//      ),
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
           FloatingActionButton(
             child: Text('WIN'),
-            onPressed: _incrementWin,
+            onPressed: () {},
             backgroundColor: Colors.grey[800],
             heroTag: null,
           ),
           SizedBox(width: 15.0,),
           FloatingActionButton(
             child: Text('LOSE'),
-            onPressed: () {
-              setState(() {
-                loseCount += 1;
-              });
-            },
+            onPressed: () {},
             backgroundColor: Colors.grey[800],
             heroTag: null,
           ),
           SizedBox(width: 15.0,),
           FloatingActionButton(
             child: Text('RESET'),
-            onPressed: _resetCounters,
+            onPressed: () {},
             backgroundColor: Colors.grey[800],
             heroTag: null,
           ),
@@ -94,12 +64,16 @@ class _PlayerCardState extends State<PlayerCard> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     CircleAvatar(
-                      backgroundImage: NetworkImage('https://raw.githubusercontent.com/marcrd/smash-ultimate-assets/master/stock-icons/png/mario.png'),
+                      backgroundImage: NetworkImage(
+                          'https://raw.githubusercontent.com/marcrd/smash-ultimate-assets/master/stock-icons/png/mario.png'
+                      ),
                       backgroundColor: Colors.grey[850],
                       radius: 70.0,
                     ),
                     CircleAvatar(
-                      backgroundImage: NetworkImage('https://raw.githubusercontent.com/marcrd/smash-ultimate-assets/master/stock-icons/png/peach.png'),
+                      backgroundImage: NetworkImage(
+                          'https://raw.githubusercontent.com/marcrd/smash-ultimate-assets/master/stock-icons/png/peach.png'
+                      ),
                       backgroundColor: Colors.grey[850],
                       radius: 70.0,
                     ),
@@ -119,7 +93,7 @@ class _PlayerCardState extends State<PlayerCard> {
             ),
             SizedBox(height: 10.0,),
             Text(
-              'Nebula',
+              player.playerId,
               style: TextStyle(
                 color: Colors.amberAccent[200],
                 letterSpacing: 2.0,
@@ -137,7 +111,7 @@ class _PlayerCardState extends State<PlayerCard> {
             ),
             SizedBox(height: 10.0,),
             Text(
-              '$winCount - $loseCount',
+              player.playerSetCount,
               style: TextStyle(
                 color: Colors.amberAccent[200],
                 letterSpacing: 2.0,
@@ -156,6 +130,7 @@ class _PlayerCardState extends State<PlayerCard> {
                 SizedBox(width: 10.0,),
                 Flexible(
                   child: TextField(
+                    controller: TextEditingController()..text = player.playerNotes,
                     decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: 'ENTER NOTES HERE'
