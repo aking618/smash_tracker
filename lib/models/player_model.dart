@@ -1,7 +1,7 @@
 class Player {
   String playerId;
   String playerSetCount;
-  List<String> playerChars;
+  Characters playerChars;
   String playerNotes;
 
   Player ({
@@ -12,14 +12,26 @@ class Player {
   });
 
   factory Player.fromJson(Map<String, dynamic> parsedJson) {
-    var charsFromPlayer = parsedJson['characters'];
-    List<String> charsList = charsFromPlayer.cast<String>();
     return Player (
         playerId: parsedJson['id'],
         playerSetCount: parsedJson['setCount'],
-        playerChars: charsList,
+        playerChars: Characters.fromJson(parsedJson['characters']),
         playerNotes: parsedJson['notes']
     );
   }
 
+}
+
+class Characters {
+  String char1;
+  String char2;
+
+  Characters({this.char1, this.char2});
+
+  factory Characters.fromJson(Map<String, dynamic> parsedJson) {
+    return new Characters(
+      char1: parsedJson['char1'],
+      char2: parsedJson['char2']
+    );
+  }
 }

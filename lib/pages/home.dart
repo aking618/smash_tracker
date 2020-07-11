@@ -10,19 +10,22 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
-  List<Player> players;
+  //List<Player> players;
 
    void loadPlayerCard (String playerName) async {
+    print('before getPlayer');
     Player player = await getPlayer(playerName);
-    players.add(player);
+    print("after getPlayer");
+    print(player.playerId);
+    //players.add(player);
 
     Navigator.pushNamed(context, '/playerCard', arguments: player);
   }
 
-//  @override
-//  void initState() {
-//    super.initState();
-//  }
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +38,25 @@ class _HomeState extends State<Home> {
         elevation: 0,
       ),
       body: Center(
-        child: RaisedButton.icon(
-            onPressed: loadPlayerCard('nebula'),
-            icon: Icon(Icons.touch_app),
-            label: Text('Nebula'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            RaisedButton.icon(
+                onPressed: ()async{loadPlayerCard('nebula');},
+                icon: Icon(Icons.touch_app),
+                label: Text('Nebula'),
+            ),
+            RaisedButton.icon(
+              onPressed: ()async{loadPlayerCard('quiet');},
+              icon: Icon(Icons.touch_app),
+              label: Text('Quiet'),
+            ),
+            RaisedButton.icon(
+              onPressed: ()async{loadPlayerCard('kambo');},
+              icon: Icon(Icons.touch_app),
+              label: Text('Kambo'),
+            ),
+          ],
         ),
       ),
     );

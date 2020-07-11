@@ -16,6 +16,9 @@ Future loadPlayer (String playerName) async {
 }
 
 Future<Player> getPlayer(String playerName) async {
+  print('before loadPlayer');
   await loadPlayer(playerName);
+  print('after loadPlayer');
+  print(player.playerId);
   return player;
 }

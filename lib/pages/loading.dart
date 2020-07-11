@@ -10,7 +10,7 @@ class Loading extends StatefulWidget {
 class _LoadingState extends State<Loading> {
 
   void setupHomePage() async {
-    await print("I have loaded");
+    await Future.delayed(Duration(seconds: 2), (){});
     Navigator.pushReplacementNamed(context, '/home');
   }
 
@@ -25,9 +25,10 @@ class _LoadingState extends State<Loading> {
     return Scaffold(
       backgroundColor: Colors.grey[900],
       body: Center(
-        child: SpinKitFadingFour(
+        child: SpinKitRipple(
           color: Colors.white,
           size: 80.0,
+
         ),
       ),
     );
