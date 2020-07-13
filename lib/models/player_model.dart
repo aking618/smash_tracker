@@ -1,37 +1,31 @@
+import 'package:json_annotation/json_annotation.dart';
+import 'character_model.dart';
+
+part 'player_model.g.dart';
+
+@JsonSerializable(explicitToJson: true)
 class Player {
+  Player (
+      this.playerId,
+      this.playerSetCount,
+      this.playerChars,
+      this.playerNotes
+      );
+
+  @JsonKey(name: 'id')
   String playerId;
+
+  @JsonKey(name: 'setCount')
   String playerSetCount;
+
+  @JsonKey(name: 'characters')
   Characters playerChars;
+
+  @JsonKey(name: 'notes')
   String playerNotes;
 
-  Player ({
-    this.playerId,
-    this.playerSetCount,
-    this.playerChars,
-    this.playerNotes
-  });
+  factory Player.fromJson (Map<String, dynamic> json) => _$PlayerFromJson(json);
 
-  factory Player.fromJson(Map<String, dynamic> parsedJson) {
-    return Player (
-        playerId: parsedJson['id'],
-        playerSetCount: parsedJson['setCount'],
-        playerChars: Characters.fromJson(parsedJson['characters']),
-        playerNotes: parsedJson['notes']
-    );
-  }
+  Map<String, dynamic> toJson() => _$PlayerToJson(this);
 
-}
-
-class Characters {
-  String char1;
-  String char2;
-
-  Characters({this.char1, this.char2});
-
-  factory Characters.fromJson(Map<String, dynamic> parsedJson) {
-    return new Characters(
-      char1: parsedJson['char1'],
-      char2: parsedJson['char2']
-    );
-  }
 }
