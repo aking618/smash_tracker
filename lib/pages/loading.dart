@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:smash_tracker/services/player_services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:smash_tracker/models/playerlist_model.dart';
+import 'package:smash_tracker/services/playerlist_services.dart';
+
+import 'home.dart';
 
 class Loading extends StatefulWidget {
   @override
@@ -10,8 +13,16 @@ class Loading extends StatefulWidget {
 class _LoadingState extends State<Loading> {
 
   void setupHomePage() async {
-    await Future.delayed(Duration(seconds: 3), (){});
-    Navigator.pushReplacementNamed(context, '/home');
+    PlayerList playerList = await getPlayerList();
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => Home(),
+        settings: RouteSettings(
+          arguments: playerList,
+        ),
+      ),
+    );
   }
 
   @override

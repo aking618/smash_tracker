@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:smash_tracker/models/character_model.dart';
 import 'package:smash_tracker/models/player_model.dart';
-import 'package:smash_tracker/services/player_services.dart';
-import 'package:smash_tracker/models/player_list_tiles.dart';
-import 'package:smash_tracker/models/player_model.dart';
+import 'package:smash_tracker/models/playerlist_model.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -13,7 +11,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
-  //List<Player> players;
+  PlayerList playerList;
 
 //   void loadPlayerCard (String playerName) async {
 //    print('before getPlayer');
@@ -34,6 +32,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
+    playerList =  ModalRoute.of(context).settings.arguments;
   }
 
   @override
@@ -71,6 +70,22 @@ class _HomeState extends State<Home> {
             onPressed: ()async{loadPlayerCard('kambo');},
             icon: Icon(Icons.touch_app),
             label: Text('Kambo'),
+          ),
+          RaisedButton.icon(
+            onPressed: () {
+              Navigator.pushNamed(context, '/dropDown');
+            },
+            icon: Icon(Icons.arrow_downward),
+            label: Text('Add'),
+          ),
+          ListView.builder(
+              itemCount: playerList.players.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(playerList.players[index].playerId),
+                  subtitle: Text(playerList.players[index].playerSetCount),
+                );
+              },
           ),
         ],
       );
