@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:smash_tracker/models/playerlist_model.dart';
+import 'package:smash_tracker/services/add_dropdown_service.dart';
+import 'package:smash_tracker/services/json_storage_services.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -9,15 +11,39 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
+  PlayerList playerList;
+
+  void addPlayer(PlayerList playerList) async {
+    final newPlayerList = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => AddPlayer()),
+    );
+
+    print(playerList.toJson().toString());
+
+    setState(() {
+      playerList = newPlayerList;
+    });
+  }
+
+  void removePlayer(PlayerList playerList, int index) async {
+
+   playerList.players.removeAt(index);
+   await writePlayerData(playerList);
+  }
+
   @override
   void initState() {
     super.initState();
+    readPlayerData().then((PlayerList list) {
+      playerList = list;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
 
-    PlayerList playerList = ModalRoute.of(context).settings.arguments;
+    playerList = ModalRoute.of(context).settings.arguments;
     print("after assigning playerList");
 
     return Scaffold(
@@ -29,9 +55,9 @@ class _HomeState extends State<Home> {
         elevation: 0,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(context, 'addPlayer');
-        },
+        onPressed: () async {addPlayer(playerList);},
+        child: Icon(Icons.add),
+        backgroundColor: Colors.grey[600],
       ),
       body: Padding(
         padding: EdgeInsets.all(15.0),
@@ -59,6 +85,17 @@ class _HomeState extends State<Home> {
                   onTap: () {
                     Navigator.pushNamed(context, '/playerCard', arguments: playerList.players[index]);
                   },
+                  trailing: IconButton(
+                    onPressed: () async {
+                      removePlayer(playerList, index);
+                      PlayerList newPlayerList = await readPlayerData();
+                      setState(()  {
+                        playerList = newPlayerList;
+                      });
+                      },
+                    icon: Icon(Icons.delete_outline),
+                    color: Colors.white,
+                  ),
                 );
               },
             ),

@@ -1,5 +1,10 @@
 import 'package:dropdown_formfield/dropdown_formfield.dart';
 import 'package:flutter/material.dart';
+import 'package:smash_tracker/models/character_model.dart';
+import 'package:smash_tracker/models/player_model.dart';
+import 'package:smash_tracker/models/playerlist_model.dart';
+import 'package:smash_tracker/services/json_storage_services.dart';
+import 'package:smash_tracker/services/playerlist_services.dart';
 
 class AddPlayer extends StatefulWidget {
   @override
@@ -34,19 +39,30 @@ class _AddPlayerState extends State<AddPlayer> {
     _myChar2Result = '';
   }
 
-  void _saveForm() {
+  void _saveForm() async {
       setState(() {
         _myChar1Result = _myChar1;
         _myChar2Result = _myChar2;
       });
+      Player newPlayer = new Player("$playerName", "0 - 0",
+          new Characters(_myChar1Result, _myChar2Result), "");
+      playerList.players.add(newPlayer);
 
-      Scaffold.of(context)
-          .showSnackBar(SnackBar(content:
-      Text('Saved Data')));
+      if (playerList.players[0].playerId == "Filler Character") {
+        playerList.players.removeAt(0);
+      }
+
+      await writePlayerData(playerList);
+      playerList = await readPlayerData();
+
+      Navigator.popAndPushNamed(context, '/home', arguments: playerList);
   }
 
   @override
   Widget build(BuildContext context) {
+
+    PlayerList playerList = ModalRoute.of(context).settings.arguments;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.grey[400],
