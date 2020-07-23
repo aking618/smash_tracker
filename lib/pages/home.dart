@@ -13,24 +13,7 @@ class _HomeState extends State<Home> {
 
   PlayerList playerList;
 
-  void addPlayer(PlayerList playerList) async {
-    final newPlayerList = await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => AddPlayer()),
-    );
 
-    print(playerList.toJson().toString());
-
-    setState(() {
-      playerList = newPlayerList;
-    });
-  }
-
-  void removePlayer(PlayerList playerList, int index) async {
-
-   playerList.players.removeAt(index);
-   await writePlayerData(playerList);
-  }
 
   @override
   void initState() {
@@ -38,13 +21,33 @@ class _HomeState extends State<Home> {
     readPlayerData().then((PlayerList list) {
       playerList = list;
     });
+
+    
   }
 
   @override
   Widget build(BuildContext context) {
 
+    // add Player to the PlayerList
+    void addPlayer() async {
+      await Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => AddPlayer()),
+      );
+      var newPlayerList = ModalRoute.of(context).settings.arguments;
+
+      setState(() {
+        playerList = newPlayerList;
+      });
+    }
+
+    void removePlayer(int index) async {
+
+      playerList.players.removeAt(index);
+      await writePlayerData(playerList);
+    }
+
     playerList = ModalRoute.of(context).settings.arguments;
-    print("after assigning playerList");
 
     return Scaffold(
       backgroundColor: Colors.grey[900],
@@ -55,7 +58,7 @@ class _HomeState extends State<Home> {
         elevation: 0,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {addPlayer(playerList);},
+        onPressed: () async {addPlayer();},
         child: Icon(Icons.add),
         backgroundColor: Colors.grey[600],
       ),
@@ -83,11 +86,15 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                   onTap: () {
-                    Navigator.pushNamed(context, '/playerCard', arguments: playerList.players[index]);
+                    Navigator.pushNamed(context, '/playerCard', arguments: {
+                      'player': playerList.players[index],
+                      'playerList': playerList,
+                      'index': index
+                    });
                   },
                   trailing: IconButton(
                     onPressed: () async {
-                      removePlayer(playerList, index);
+                      removePlayer(index);
                       PlayerList newPlayerList = await readPlayerData();
                       setState(()  {
                         playerList = newPlayerList;

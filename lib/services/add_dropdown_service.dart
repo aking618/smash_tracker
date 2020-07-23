@@ -5,6 +5,7 @@ import 'package:smash_tracker/models/player_model.dart';
 import 'package:smash_tracker/models/playerlist_model.dart';
 import 'package:smash_tracker/services/json_storage_services.dart';
 import 'package:smash_tracker/services/playerlist_services.dart';
+import 'dart:convert';
 
 class AddPlayer extends StatefulWidget {
   @override
@@ -18,6 +19,7 @@ class _AddPlayerState extends State<AddPlayer> {
   String _myChar2;
   String _myChar2Result;
   String playerName;
+
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final GlobalKey<FormState> formKey1 =  GlobalKey<FormState>();
   final GlobalKey<FormState> formKey2 =  GlobalKey<FormState>();
@@ -44,6 +46,7 @@ class _AddPlayerState extends State<AddPlayer> {
         _myChar1Result = _myChar1;
         _myChar2Result = _myChar2;
       });
+
       Player newPlayer = new Player("$playerName", "0 - 0",
           new Characters(_myChar1Result, _myChar2Result), "");
       playerList.players.add(newPlayer);

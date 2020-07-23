@@ -16,3 +16,10 @@ class Characters {
   Map<String, dynamic> toJson() => _$CharactersToJson(this);
 
 }
+
+String characterToJson (Characters characters) {
+  String playerCharacters = '{"char1": "${characters.char1}",'
+      '"char2": "${characters.char2}"},';
+
+  return playerCharacters;
+}

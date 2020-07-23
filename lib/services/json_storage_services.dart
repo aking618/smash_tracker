@@ -19,18 +19,14 @@ Future<File> get _localFile async {
 
 Future<File> writePlayerData(PlayerList playerList) async {
   final file = await _localFile;
-  return file.writeAsString(playerList.toJson().toString());
+  return file.writeAsString(PlayerListtoJson(playerList));
 }
 
 Future<PlayerList> readPlayerData () async {
   try {
     final file = await _localFile;
-    print('hi');
-    print('file: ${file.readAsStringSync()}');
     String contents = await file.readAsString();
-    print('contents: $contents');
-    final jsonResponse = (jsonDecode(contents));
-    print(jsonResponse);
+    final jsonResponse = (jsonDecode(contents)); //wrap in encode
     PlayerList playerList = PlayerList.fromJson(jsonResponse);
     return playerList;
   } catch (e) {

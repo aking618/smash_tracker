@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:smash_tracker/models/character_model.dart';
 import 'character_model.dart';
 
 part 'player_model.g.dart';
@@ -28,4 +29,21 @@ class Player {
 
   Map<String, dynamic> toJson() => _$PlayerToJson(this);
 
+}
+
+String playerToJson(List<Player> players) {
+  String playerString = "";
+
+  for(int i = 0; i < players.length; i++) {
+    playerString += '{"id": "${players[i].playerId}",'
+        '"setCount": "${players[i].playerSetCount}",'
+        '"characters": ${characterToJson(players[i].playerChars)}'
+        '"notes": "${players[i].playerNotes}"}';
+
+    if (!(i == players.length - 1)) {
+      playerString += ',';
+    }
+  }
+
+  return playerString;
 }

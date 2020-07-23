@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:smash_tracker/models/player_model.dart';
+import 'package:smash_tracker/models/playerlist_model.dart';
+import 'package:smash_tracker/services/json_storage_services.dart';
+import 'package:smash_tracker/services/player_services.dart';
 
 class PlayerCard extends StatefulWidget {
 
@@ -11,31 +14,66 @@ class PlayerCard extends StatefulWidget {
 
 class _PlayerCardState extends State<PlayerCard> {
 
-  @override
-  void initState() {
-    super.initState();
+  int winCount;
+  int loseCount;
+
+  void getWinLoseCount(Player player) {
+
+    List<String> setCount = player.playerSetCount.split(" - ");
+
+    String win = setCount[0];
+    String lose = setCount[1];
+
+    setState(() {
+      winCount = int.parse(win);
+      loseCount = int.parse(lose);
+    });
+  }
+
+  void incrementCounts (PlayerList playerList, int index, Player player, String type) {
+    if (type == 'win') {
+      setState(() {
+        winCount += 1;
+        playerList.players[index].playerSetCount = "$winCount - $loseCount";
+      });
+
+    } else {
+      setState(() {
+        loseCount += 1;
+        playerList.players[index].playerSetCount = "$winCount - $loseCount";
+      });
+
+      writePlayerData(playerList);
+    }
+
+
+    print(PlayerListtoJson(playerList));
+    print(player.playerSetCount);
   }
 
   @override
   Widget build(BuildContext context) {
 
-    Player player = ModalRoute.of(context).settings.arguments;
+    Map data = ModalRoute.of(context).settings.arguments;
+    Player player = data['player'];
+    PlayerList playerList = data['playerList'];
+    int index = data['index'];
+
+    setState(() {
+      getWinLoseCount(player);
+    });
 
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.grey[900],
-//      appBar: AppBar(
-//        title: Text('Player ID Card'),
-//        centerTitle: true,
-//        backgroundColor: Colors.grey[850],
-//        elevation: 0.0,
-//      ),
         floatingActionButton: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
             FloatingActionButton(
               child: Text('WIN'),
-              onPressed: () {},
+              onPressed: () {
+                incrementCounts(playerList, index, player, 'win');
+              },
               backgroundColor: Colors.grey[800],
               heroTag: null,
             ),
