@@ -809,15 +809,11 @@ class _AddPlayerState extends State<AddPlayer> {
                 onPressed: _saveForm,
               ),
             ),
-            Container(
-              padding: EdgeInsets.all(16),
-              child: Text('$_myChar1Result $_myChar2Result'),
-            ),
-            FloatingActionButton(
-              onPressed: () {
-                print('tag: $playerName myChar1: $_myChar1Result, myChar2: $_myChar2Result');
-              },
-            )
+//            FloatingActionButton(
+//              onPressed: () {
+//                print('tag: $playerName myChar1: $_myChar1Result, myChar2: $_myChar2Result');
+//              },
+//            )
           ],
         ),
       ),

@@ -30,22 +30,27 @@ class _PlayerCardState extends State<PlayerCard> {
     });
   }
 
-  void incrementCounts (PlayerList playerList, int index, Player player, String type) {
+  void changeCounts (PlayerList playerList, int index, Player player, String type) {
     if (type == 'win') {
       setState(() {
         winCount += 1;
         playerList.players[index].playerSetCount = "$winCount - $loseCount";
       });
-
-    } else {
+    } else if (type == 'lose') {
       setState(() {
         loseCount += 1;
         playerList.players[index].playerSetCount = "$winCount - $loseCount";
       });
-
-      writePlayerData(playerList);
+    } else {
+      setState(() {
+        winCount = loseCount = 0;
+        playerList.players[index].playerSetCount = "$winCount - $loseCount";
+      });
     }
 
+      writePlayerData(playerList);
+
+    //ToDo Update Home page after changing the set counts
 
     print(PlayerListtoJson(playerList));
     print(player.playerSetCount);
@@ -53,6 +58,8 @@ class _PlayerCardState extends State<PlayerCard> {
 
   @override
   Widget build(BuildContext context) {
+
+    //ToDo Network Images don't work on my Pixel 2 XL, find another way to store and load stock images
 
     Map data = ModalRoute.of(context).settings.arguments;
     Player player = data['player'];
@@ -72,7 +79,7 @@ class _PlayerCardState extends State<PlayerCard> {
             FloatingActionButton(
               child: Text('WIN'),
               onPressed: () {
-                incrementCounts(playerList, index, player, 'win');
+                changeCounts(playerList, index, player, 'win');
               },
               backgroundColor: Colors.grey[800],
               heroTag: null,
@@ -80,14 +87,18 @@ class _PlayerCardState extends State<PlayerCard> {
             SizedBox(width: 15.0,),
             FloatingActionButton(
               child: Text('LOSE'),
-              onPressed: () {},
+              onPressed: () {
+                changeCounts(playerList, index, player, 'lose');
+              },
               backgroundColor: Colors.grey[800],
               heroTag: null,
             ),
             SizedBox(width: 15.0,),
             FloatingActionButton(
               child: Text('RESET'),
-              onPressed: () {},
+              onPressed: () {
+                changeCounts(playerList, index, player, 'reset');
+              },
               backgroundColor: Colors.grey[800],
               heroTag: null,
             ),
@@ -149,6 +160,7 @@ class _PlayerCardState extends State<PlayerCard> {
                     color: Colors.grey[400],
                   ),
                   SizedBox(width: 10.0,),
+                  //ToDo Fix content overflow and Increase overall space, add the functionality to scroll through the text
                   Flexible(
                     child: TextField(
                       controller: TextEditingController()..text = player.playerNotes,
