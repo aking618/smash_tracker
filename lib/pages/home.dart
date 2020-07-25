@@ -30,15 +30,13 @@ class _HomeState extends State<Home> {
 
     // add Player to the PlayerList
     void addPlayer() async {
-      await Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => AddPlayer()),
+        ModalRoute.withName('/addPlayer'),
       );
-      var newPlayerList = ModalRoute.of(context).settings.arguments;
 
-      setState(() {
-        playerList = newPlayerList;
-      });
+      //initState();
     }
 
     void removePlayer(int index) async {

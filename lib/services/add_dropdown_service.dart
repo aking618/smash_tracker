@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:smash_tracker/models/character_model.dart';
 import 'package:smash_tracker/models/player_model.dart';
 import 'package:smash_tracker/models/playerlist_model.dart';
+import 'package:smash_tracker/pages/home.dart';
 import 'package:smash_tracker/services/json_storage_services.dart';
-import 'package:smash_tracker/services/playerlist_services.dart';
-import 'dart:convert';
 
 class AddPlayer extends StatefulWidget {
   @override
@@ -47,24 +46,27 @@ class _AddPlayerState extends State<AddPlayer> {
         _myChar2Result = _myChar2;
       });
 
-      Player newPlayer = new Player("$playerName", "0 - 0",
+      PlayerList playerList = await readPlayerData();
+
+      Player newPlayer = new Player("${playerName.trim()}", "0 - 0",
           new Characters(_myChar1Result, _myChar2Result), "");
       playerList.players.add(newPlayer);
 
-      if (playerList.players[0].playerId == "Filler Character") {
-        playerList.players.removeAt(0);
-      }
-
+      print('added new Player');
       await writePlayerData(playerList);
-      playerList = await readPlayerData();
+      print('updated JSON');
 
-      Navigator.popAndPushNamed(context, '/home', arguments: playerList);
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => Home()),
+        ModalRoute.withName('/home'),
+      );
   }
 
   @override
   Widget build(BuildContext context) {
 
-    PlayerList playerList = ModalRoute.of(context).settings.arguments;
+    //PlayerList playerList = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
