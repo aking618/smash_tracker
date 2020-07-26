@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:smash_tracker/models/player_model.dart';
 import 'package:smash_tracker/models/playerlist_model.dart';
+import 'package:smash_tracker/pages/home.dart';
 import 'package:smash_tracker/services/json_storage_services.dart';
-import 'package:smash_tracker/services/player_services.dart';
 
 class PlayerCard extends StatefulWidget {
 
@@ -42,16 +42,35 @@ class _PlayerCardState extends State<PlayerCard> {
         playerList.players[index].playerSetCount = "$winCount - $loseCount";
       });
     } else {
-      setState(() {
-        winCount = loseCount = 0;
-        playerList.players[index].playerSetCount = "$winCount - $loseCount";
+      showDialog(
+          context: context,
+          builder: (_) {
+            return AlertDialog(
+              title: Text('Do you want to reset the set count?'),
+              actions: [
+                FlatButton(
+                  onPressed: () => Navigator.pop(context, false), // passing false
+                  child: Text('No'),
+                ),
+                FlatButton(
+                  onPressed: () => Navigator.pop(context, true), // passing true
+                  child: Text('Yes'),
+                ),
+              ],
+            );
+          }).then((exit) {
+        if (exit == null) return;
+
+        if (exit) {
+          setState(() {
+            winCount = loseCount = 0;
+            playerList.players[index].playerSetCount = "$winCount - $loseCount";
+          });
+          writePlayerData(playerList);
+        }
       });
     }
-
-      writePlayerData(playerList);
-
-    //ToDo Update Home page after changing the set counts
-
+    writePlayerData(playerList);
     print(PlayerListtoJson(playerList));
     print(player.playerSetCount);
   }
@@ -70,119 +89,132 @@ class _PlayerCardState extends State<PlayerCard> {
       getWinLoseCount(player);
     });
 
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.grey[900],
-        floatingActionButton: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            FloatingActionButton(
-              child: Text('WIN'),
-              onPressed: () {
-                changeCounts(playerList, index, player, 'win');
-              },
-              backgroundColor: Colors.grey[800],
-              heroTag: null,
-            ),
-            SizedBox(width: 15.0,),
-            FloatingActionButton(
-              child: Text('LOSE'),
-              onPressed: () {
-                changeCounts(playerList, index, player, 'lose');
-              },
-              backgroundColor: Colors.grey[800],
-              heroTag: null,
-            ),
-            SizedBox(width: 15.0,),
-            FloatingActionButton(
-              child: Text('RESET'),
-              onPressed: () {
-                changeCounts(playerList, index, player, 'reset');
-              },
-              backgroundColor: Colors.grey[800],
-              heroTag: null,
-            ),
-          ],
-        ),
-        body: Padding(
-          padding: EdgeInsets.fromLTRB(30.0,40.0,30.0,0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+
+    Future<bool> _backPress() async {
+      print('Back press');
+      return  Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => Home()),
+            (_) => false,
+      );
+    }
+
+      return WillPopScope(
+        onWillPop: _backPress,
+        child: SafeArea(
+        child: Scaffold(
+          backgroundColor: Colors.grey[900],
+          floatingActionButton: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
-              Center(
-                  child: characterIcons(player),
+              FloatingActionButton(
+                child: Text('WIN'),
+                onPressed: () {
+                  changeCounts(playerList, index, player, 'win');
+                },
+                backgroundColor: Colors.grey[800],
+                heroTag: null,
               ),
-              Divider(
-                height: 90.0,
-                color: Colors.grey[800],
+              SizedBox(width: 15.0,),
+              FloatingActionButton(
+                child: Text('LOSE'),
+                onPressed: () {
+                  changeCounts(playerList, index, player, 'lose');
+                },
+                backgroundColor: Colors.grey[800],
+                heroTag: null,
               ),
-              Text(
-                'NAME',
-                style: TextStyle(
-                  color: Colors.grey,
-                  letterSpacing: 2.0,
-                ),
-              ),
-              SizedBox(height: 10.0,),
-              Text(
-                player.playerId,
-                style: TextStyle(
-                  color: Colors.amberAccent[200],
-                  letterSpacing: 2.0,
-                  fontSize: 28.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 30.0,),
-              Text(
-                'CURRENT SET COUNT',
-                style: TextStyle(
-                  color: Colors.grey,
-                  letterSpacing: 2.0,
-                ),
-              ),
-              SizedBox(height: 10.0,),
-              Text(
-                player.playerSetCount,
-                style: TextStyle(
-                  color: Colors.amberAccent[200],
-                  letterSpacing: 2.0,
-                  fontSize: 28.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 30.0,),
-              Row(
-                children: <Widget>[
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.add_comment),
-                    color: Colors.grey[400],
-                  ),
-                  SizedBox(width: 10.0,),
-                  //ToDo Fix content overflow and Increase overall space, add the functionality to scroll through the text
-                  Flexible(
-                    child: TextField(
-                      controller: TextEditingController()..text = player.playerNotes,
-                      scrollPadding: EdgeInsets.all(10.0),
-                      decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'ENTER NOTES HERE'
-                      ),
-                      style: TextStyle(
-                        color: Colors.grey[400],
-                        fontSize: 18.0,
-                        letterSpacing: 1.0,
-                      ),
-                    ),
-                  ),
-                ],
+              SizedBox(width: 15.0,),
+              FloatingActionButton(
+                child: Text('RESET'),
+                onPressed: () {
+                  changeCounts(playerList, index, player, 'reset');
+                },
+                backgroundColor: Colors.grey[800],
+                heroTag: null,
               ),
             ],
           ),
+          body: Padding(
+            padding: EdgeInsets.fromLTRB(30.0,40.0,30.0,0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Center(
+                    child: characterIcons(player),
+                ),
+                Divider(
+                  height: 90.0,
+                  color: Colors.grey[800],
+                ),
+                Text(
+                  'NAME',
+                  style: TextStyle(
+                    color: Colors.grey,
+                    letterSpacing: 2.0,
+                  ),
+                ),
+                SizedBox(height: 10.0,),
+                Text(
+                  player.playerId,
+                  style: TextStyle(
+                    color: Colors.amberAccent[200],
+                    letterSpacing: 2.0,
+                    fontSize: 28.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 30.0,),
+                Text(
+                  'CURRENT SET COUNT',
+                  style: TextStyle(
+                    color: Colors.grey,
+                    letterSpacing: 2.0,
+                  ),
+                ),
+                SizedBox(height: 10.0,),
+                Text(
+                  player.playerSetCount,
+                  style: TextStyle(
+                    color: Colors.amberAccent[200],
+                    letterSpacing: 2.0,
+                    fontSize: 28.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 30.0,),
+                Row(
+                  children: <Widget>[
+                    IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.add_comment),
+                      color: Colors.grey[400],
+                    ),
+                    SizedBox(width: 10.0,),
+                    //ToDo Fix content overflow and Increase overall space, add the functionality to scroll through the text
+                    Flexible(
+                      child: TextField(
+                        controller: TextEditingController()..text = player.playerNotes,
+                        scrollPadding: EdgeInsets.all(10.0),
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: 'ENTER NOTES HERE'
+                        ),
+                        style: TextStyle(
+                          color: Colors.grey[400],
+                          fontSize: 18.0,
+                          letterSpacing: 1.0,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
         ),
-      ),
-    );
+    ),
+      );
   }
 
   Widget characterIcons(Player player) {

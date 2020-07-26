@@ -1,4 +1,4 @@
-package com.aking.ninjaid;
+package com.aking.smashtracker;
 
 import io.flutter.embedding.android.FlutterActivity;
 

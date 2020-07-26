@@ -1,6 +1,6 @@
 import 'package:dropdown_formfield/dropdown_formfield.dart';
 import 'package:flutter/material.dart';
-import 'package:smash_tracker/models/character_model.dart';
+import 'package:smash_tracker/models/character_model.dart' as Characters;
 import 'package:smash_tracker/models/player_model.dart';
 import 'package:smash_tracker/models/playerlist_model.dart';
 import 'package:smash_tracker/pages/home.dart';
@@ -49,8 +49,9 @@ class _AddPlayerState extends State<AddPlayer> {
       PlayerList playerList = await readPlayerData();
 
       Player newPlayer = new Player("${playerName.trim()}", "0 - 0",
-          new Characters(_myChar1Result, _myChar2Result), "");
+          new Characters.Characters(_myChar1Result, _myChar2Result), "");
       playerList.players.add(newPlayer);
+
 
       print('added new Player');
       await writePlayerData(playerList);
@@ -59,15 +60,11 @@ class _AddPlayerState extends State<AddPlayer> {
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => Home()),
-        ModalRoute.withName('/home'),
-      );
+        (_) => false);
   }
 
   @override
   Widget build(BuildContext context) {
-
-    //PlayerList playerList = ModalRoute.of(context).settings.arguments;
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.grey[400],
