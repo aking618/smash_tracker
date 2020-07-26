@@ -256,7 +256,7 @@ class _AddPlayerState extends State<AddPlayer> {
                     },
                     {
                       "display": "Lucario",
-                      "value": "ludcario",
+                      "value": "lucario",
                     },
                     {
                       "display": "Lucas",
@@ -610,7 +610,7 @@ class _AddPlayerState extends State<AddPlayer> {
                     },
                     {
                       "display": "Lucario",
-                      "value": "ludcario",
+                      "value": "lucario",
                     },
                     {
                       "display": "Lucas",

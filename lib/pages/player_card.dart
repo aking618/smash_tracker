@@ -17,6 +17,8 @@ class _PlayerCardState extends State<PlayerCard> {
   int winCount;
   int loseCount;
 
+  TextEditingController _notesController = TextEditingController();
+
   void getWinLoseCount(Player player) {
 
     List<String> setCount = player.playerSetCount.split(" - ");
@@ -75,6 +77,7 @@ class _PlayerCardState extends State<PlayerCard> {
     print(player.playerSetCount);
   }
 
+
   @override
   Widget build(BuildContext context) {
 
@@ -87,6 +90,9 @@ class _PlayerCardState extends State<PlayerCard> {
 
     setState(() {
       getWinLoseCount(player);
+      _notesController.text = playerList.players[index].playerNotes;
+      _notesController.selection = TextSelection.fromPosition(
+          TextPosition(offset: _notesController.text.length));
     });
 
 
@@ -135,81 +141,90 @@ class _PlayerCardState extends State<PlayerCard> {
               ),
             ],
           ),
-          body: Padding(
-            padding: EdgeInsets.fromLTRB(30.0,40.0,30.0,0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Center(
-                    child: characterIcons(player),
-                ),
-                Divider(
-                  height: 90.0,
-                  color: Colors.grey[800],
-                ),
-                Text(
-                  'NAME',
-                  style: TextStyle(
-                    color: Colors.grey,
-                    letterSpacing: 2.0,
-                  ),
-                ),
-                SizedBox(height: 10.0,),
-                Text(
-                  player.playerId,
-                  style: TextStyle(
-                    color: Colors.amberAccent[200],
-                    letterSpacing: 2.0,
-                    fontSize: 28.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(height: 30.0,),
-                Text(
-                  'CURRENT SET COUNT',
-                  style: TextStyle(
-                    color: Colors.grey,
-                    letterSpacing: 2.0,
-                  ),
-                ),
-                SizedBox(height: 10.0,),
-                Text(
-                  player.playerSetCount,
-                  style: TextStyle(
-                    color: Colors.amberAccent[200],
-                    letterSpacing: 2.0,
-                    fontSize: 28.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(height: 30.0,),
-                Row(
-                  children: <Widget>[
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.add_comment),
-                      color: Colors.grey[400],
-                    ),
-                    SizedBox(width: 10.0,),
-                    //ToDo Fix content overflow and Increase overall space, add the functionality to scroll through the text
-                    Flexible(
-                      child: TextField(
-                        controller: TextEditingController()..text = player.playerNotes,
-                        scrollPadding: EdgeInsets.all(10.0),
-                        decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'ENTER NOTES HERE'
+          body: Container(
+            padding: EdgeInsets.only(bottom: 100.0),
+            child: SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height),
+                child: Container(
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(30.0,40.0,30.0,0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Center(
+                            child: characterIcons(player),
                         ),
-                        style: TextStyle(
-                          color: Colors.grey[400],
-                          fontSize: 18.0,
-                          letterSpacing: 1.0,
+                        Divider(
+                          height: 90.0,
+                          color: Colors.grey[800],
                         ),
-                      ),
+                        Text(
+                          'NAME',
+                          style: TextStyle(
+                            color: Colors.grey,
+                            letterSpacing: 2.0,
+                          ),
+                        ),
+                        SizedBox(height: 10.0,),
+                        Text(
+                          player.playerId,
+                          style: TextStyle(
+                            color: Colors.amberAccent[200],
+                            letterSpacing: 2.0,
+                            fontSize: 28.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 30.0,),
+                        Text(
+                          'CURRENT SET COUNT',
+                          style: TextStyle(
+                            color: Colors.grey,
+                            letterSpacing: 2.0,
+                          ),
+                        ),
+                        SizedBox(height: 10.0,),
+                        Text(
+                          player.playerSetCount,
+                          style: TextStyle(
+                            color: Colors.amberAccent[200],
+                            letterSpacing: 2.0,
+                            fontSize: 28.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 30.0,),
+                        Text(
+                          'NOTES',
+                          style: TextStyle(
+                            color: Colors.grey,
+                            letterSpacing: 2.0,
+                          ),
+                        ),
+                        SizedBox(height: 10.0,),
+                        Flexible(
+                          child: TextField(
+                            controller: _notesController,
+                            obscureText: false,
+                            maxLines: null,
+                            onChanged: (value) {
+                              playerList.players[index].playerNotes = value;
+                              writePlayerData(playerList);
+                            },
+                            style: TextStyle(
+                              color: Colors.amberAccent[200],
+                              letterSpacing: 2.0,
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
-              ],
+              ),
             ),
           ),
         ),
