@@ -13,6 +13,16 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   PlayerList playerList;
 
+  ThemeData darkTheme;
+  ThemeData lightTheme;
+
+  //Todo
+  // Nintendo themed colors
+  // Light themed
+  // Dark themed
+
+  // Blue
+
   @override
   void initState() {
     super.initState();
@@ -48,7 +58,6 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-
     Future<bool> _onWillPop() async {
       return (await showDialog(
         context: context,
@@ -78,6 +87,55 @@ class _HomeState extends State<Home> {
           centerTitle: true,
           backgroundColor: Colors.grey[850],
           elevation: 0,
+        ),
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              DrawerHeader(
+                child: Text('Smash Tracker'),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                ),
+              ),
+              ListTile(
+                title: Text('About'),
+                onTap: () {
+                  // Do Stuff
+
+                  // Close the drawer
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: Text('Feedback'),
+                onTap: () {
+                  // Do Stuff
+
+                  // Close the drawer
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: Text('Settings'),
+                onTap: () {
+                  // Do Stuff
+
+                  // Close the drawer
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: Text('Support the Dev'),
+                onTap: () {
+                  // Do Stuff
+
+                  // Close the drawer
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {addPlayer();},
