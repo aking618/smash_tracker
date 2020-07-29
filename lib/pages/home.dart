@@ -13,9 +13,6 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   PlayerList playerList;
 
-  ThemeData darkTheme;
-  ThemeData lightTheme;
-
   //Todo
   // Nintendo themed colors
   // Light themed
@@ -81,11 +78,17 @@ class _HomeState extends State<Home> {
     return new WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
-        backgroundColor: Colors.grey[900],
+        backgroundColor: Colors.white,
         appBar: AppBar(
-          title: Text('Smash Tracker'),
+          title: Text(
+              'Smash Tracker',
+            style: TextStyle(
+              fontFamily: 'Smash',
+              fontSize: 24.0
+            )
+          ),
           centerTitle: true,
-          backgroundColor: Colors.grey[850],
+          backgroundColor: Color.fromRGBO(255, 174, 3, 1.0),
           elevation: 0,
         ),
         drawer: Drawer(
@@ -93,13 +96,27 @@ class _HomeState extends State<Home> {
             padding: EdgeInsets.zero,
             children: <Widget>[
               DrawerHeader(
-                child: Text('Smash Tracker'),
+                child: Text(
+                    'Smash Tracker',
+                  style: TextStyle(
+                    fontFamily: 'Smash',
+                    fontSize: 25.0,
+                    color: Colors.white,
+                  ),
+                ),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Color.fromRGBO(255, 174, 3, 1.0),
                 ),
               ),
               ListTile(
-                title: Text('About'),
+                title: Text(
+                    'About',
+                  style: TextStyle(
+                    fontFamily: 'Smash',
+                    fontSize: 15.0,
+                    color: Color.fromRGBO(77, 114, 152, 1.0),
+                  ),
+                ),
                 onTap: () {
                   // Do Stuff
 
@@ -108,7 +125,14 @@ class _HomeState extends State<Home> {
                 },
               ),
               ListTile(
-                title: Text('Feedback'),
+                title: Text(
+                    'Feedback',
+                  style: TextStyle(
+                    fontFamily: 'Smash',
+                    fontSize: 15.0,
+                    color: Color.fromRGBO(77, 114, 152, 1.0),
+                  ),
+                ),
                 onTap: () {
                   // Do Stuff
 
@@ -117,7 +141,14 @@ class _HomeState extends State<Home> {
                 },
               ),
               ListTile(
-                title: Text('Settings'),
+                title: Text(
+                  'Settings',
+                  style: TextStyle(
+                    fontFamily: 'Smash',
+                    fontSize: 15.0,
+                    color: Color.fromRGBO(77, 114, 152, 1.0),
+                  ),
+                ),
                 onTap: () {
                   // Do Stuff
 
@@ -126,7 +157,14 @@ class _HomeState extends State<Home> {
                 },
               ),
               ListTile(
-                title: Text('Support the Dev'),
+                title: Text(
+                  'Support the Developer',
+                  style: TextStyle(
+                    fontFamily: 'Smash',
+                    fontSize: 15.0,
+                    color: Color.fromRGBO(77, 114, 152, 1.0),
+                  ),
+                ),
                 onTap: () {
                   // Do Stuff
 
@@ -140,48 +178,61 @@ class _HomeState extends State<Home> {
         floatingActionButton: FloatingActionButton(
           onPressed: () async {addPlayer();},
           child: Icon(Icons.add),
-          backgroundColor: Colors.grey[600],
+          backgroundColor: Color.fromRGBO(219, 22, 47, 1.0),
         ),
-        body: Padding(
-          padding: EdgeInsets.all(15.0),
-          child: Container(
-            child: Card(
-              color: Colors.grey[900],
-              shadowColor: Colors.black87,
-              child: ListView.builder(
-                itemCount: playerList.players.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    //leading: characterIcons(playerList.players[index]),
-                    title: Text(
-                      playerList.players[index].playerId,
-                      style: TextStyle(
-                        color: Colors.amberAccent,
+        body: Container(
+          child: Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0)
+            ),
+            color: Colors.white,
+            shadowColor: Colors.black87,
+            child: ListView.builder(
+              itemCount: playerList.players.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  //leading: characterIcons(playerList.players[index]),
+                  title: Text(
+                    playerList.players[index].playerId,
+                    style: TextStyle(
+                      fontFamily: 'Smash',
+                      letterSpacing: 2.0,
+                      color: Color.fromRGBO(77, 114, 152, 1.0),
+                    ),
+                  ),
+                  subtitle: Text(
+                    playerList.players[index].playerSetCount,
+                    style: TextStyle(
+                      fontFamily: 'Smash',
+                      letterSpacing: 2.0,
+                      color: Color.fromRGBO(77, 114, 152, 1.0)
+                    ),
+                  ),
+                  onTap: () async {
+                    loadPlayerCard(index);
+                  },
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      IconButton(
+                        onPressed: () {},
+                        icon: Icon(Icons.edit),
                       ),
-                    ),
-                    subtitle: Text(
-                      playerList.players[index].playerSetCount,
-                      style: TextStyle(
-                        color: Colors.amberAccent,
+                      IconButton(
+                        onPressed: () async {
+                          removePlayer(index);
+                          PlayerList newPlayerList = await readPlayerData();
+                          setState(()  {
+                            playerList = newPlayerList;
+                          });
+                          },
+                        icon: Icon(Icons.delete_outline),
+                        color: Colors.black,
                       ),
-                    ),
-                    onTap: () async {
-                      loadPlayerCard(index);
-                    },
-                    trailing: IconButton(
-                      onPressed: () async {
-                        removePlayer(index);
-                        PlayerList newPlayerList = await readPlayerData();
-                        setState(()  {
-                          playerList = newPlayerList;
-                        });
-                        },
-                      icon: Icon(Icons.delete_outline),
-                      color: Colors.white,
-                    ),
-                  );
-                },
-              ),
+                    ],
+                  ),
+                );
+              },
             ),
           ),
         ),

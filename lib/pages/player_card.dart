@@ -17,6 +17,8 @@ class _PlayerCardState extends State<PlayerCard> {
   int winCount;
   int loseCount;
 
+  TextStyle buttonStyle = TextStyle(fontFamily: "Smash");
+
   TextEditingController _notesController = TextEditingController();
 
   void getWinLoseCount(Player player) {
@@ -109,34 +111,34 @@ class _PlayerCardState extends State<PlayerCard> {
         onWillPop: _backPress,
         child: SafeArea(
         child: Scaffold(
-          backgroundColor: Colors.grey[900],
+          backgroundColor: Colors.white,
           floatingActionButton: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
               FloatingActionButton(
-                child: Text('WIN'),
+                child: Text('WIN', style: buttonStyle,),
                 onPressed: () {
                   changeCounts(playerList, index, player, 'win');
                 },
-                backgroundColor: Colors.grey[800],
+                backgroundColor: Color.fromRGBO(219, 22, 47, 1.0),
                 heroTag: null,
               ),
               SizedBox(width: 15.0,),
               FloatingActionButton(
-                child: Text('LOSE'),
+                child: Text('LOSE', style: buttonStyle,),
                 onPressed: () {
                   changeCounts(playerList, index, player, 'lose');
                 },
-                backgroundColor: Colors.grey[800],
+                backgroundColor: Color.fromRGBO(219, 22, 47, 1.0),
                 heroTag: null,
               ),
               SizedBox(width: 15.0,),
               FloatingActionButton(
-                child: Text('RESET'),
+                child: Text('RESET', style: buttonStyle,),
                 onPressed: () {
                   changeCounts(playerList, index, player, 'reset');
                 },
-                backgroundColor: Colors.grey[800],
+                backgroundColor: Color.fromRGBO(219, 22, 47, 1.0),
                 heroTag: null,
               ),
             ],
@@ -162,7 +164,8 @@ class _PlayerCardState extends State<PlayerCard> {
                         Text(
                           'NAME',
                           style: TextStyle(
-                            color: Colors.grey,
+                            color: Color.fromRGBO(77, 144, 152, 1.0),
+                            fontFamily: 'Smash',
                             letterSpacing: 2.0,
                           ),
                         ),
@@ -170,17 +173,18 @@ class _PlayerCardState extends State<PlayerCard> {
                         Text(
                           player.playerId,
                           style: TextStyle(
-                            color: Colors.amberAccent[200],
+                            color: Color.fromRGBO(255, 174, 3, 1.0),
                             letterSpacing: 2.0,
                             fontSize: 28.0,
-                            fontWeight: FontWeight.bold,
+                            //fontFamily: 'Smash'
                           ),
                         ),
                         SizedBox(height: 30.0,),
                         Text(
                           'CURRENT SET COUNT',
                           style: TextStyle(
-                            color: Colors.grey,
+                            color: Color.fromRGBO(77, 144, 152, 1.0),
+                            fontFamily: 'Smash',
                             letterSpacing: 2.0,
                           ),
                         ),
@@ -188,17 +192,18 @@ class _PlayerCardState extends State<PlayerCard> {
                         Text(
                           player.playerSetCount,
                           style: TextStyle(
-                            color: Colors.amberAccent[200],
+                            color: Color.fromRGBO(255, 174, 3, 1.0),
                             letterSpacing: 2.0,
                             fontSize: 28.0,
-                            fontWeight: FontWeight.bold,
+                            //fontFamily: 'Smash'
                           ),
                         ),
                         SizedBox(height: 30.0,),
                         Text(
                           'NOTES',
                           style: TextStyle(
-                            color: Colors.grey,
+                            color: Color.fromRGBO(77, 144, 152, 1.0),
+                            fontFamily: 'Smash',
                             letterSpacing: 2.0,
                           ),
                         ),
@@ -213,10 +218,10 @@ class _PlayerCardState extends State<PlayerCard> {
                               writePlayerData(playerList);
                             },
                             style: TextStyle(
-                              color: Colors.amberAccent[200],
+                              color: Color.fromRGBO(255, 174, 3, 1.0),
                               letterSpacing: 2.0,
                               fontSize: 14.0,
-                              fontWeight: FontWeight.bold,
+                              //fontFamily: 'Smash'
                             ),
                           ),
                         ),
@@ -243,7 +248,7 @@ class _PlayerCardState extends State<PlayerCard> {
                 'https://raw.githubusercontent.com/marcrd/smash-ultimate-assets/'
                 'master/stock-icons/png/${player.playerChars.char1}.png'
               ),
-            backgroundColor: Colors.grey[850],
+            backgroundColor: Color.fromRGBO(77, 144, 152, 1.0),
             radius: 70.0,
             ),
           ],
@@ -258,7 +263,7 @@ class _PlayerCardState extends State<PlayerCard> {
               'https://raw.githubusercontent.com/marcrd/smash-ultimate-assets/'
                   'master/stock-icons/png/${player.playerChars.char1}.png'
           ),
-          backgroundColor: Colors.grey[850],
+          backgroundColor: Color.fromRGBO(77, 144, 152, 1.0),
           radius: 70.0,
         ),
         CircleAvatar(
@@ -266,7 +271,7 @@ class _PlayerCardState extends State<PlayerCard> {
               'https://raw.githubusercontent.com/marcrd/smash-ultimate-assets/'
                   'master/stock-icons/png/${player.playerChars.char2}.png'
           ),
-          backgroundColor: Colors.grey[850],
+          backgroundColor: Color.fromRGBO(77, 144, 152, 1.0),
           radius: 70.0,
         ),
       ],
