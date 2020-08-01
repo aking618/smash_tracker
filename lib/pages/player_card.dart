@@ -83,8 +83,6 @@ class _PlayerCardState extends State<PlayerCard> {
   @override
   Widget build(BuildContext context) {
 
-    //ToDo Network Images don't work on my Pixel 2 XL, find another way to store and load stock images
-
     Map data = ModalRoute.of(context).settings.arguments;
     Player player = data['player'];
     PlayerList playerList = data['playerList'];
@@ -245,8 +243,9 @@ class _PlayerCardState extends State<PlayerCard> {
           children: <Widget>[
             CircleAvatar(
               backgroundImage: NetworkImage(
-                'https://raw.githubusercontent.com/marcrd/smash-ultimate-assets/'
-                'master/stock-icons/png/${player.playerChars.char1}.png'
+                  'https://raw.githubusercontent.com/aking618/'
+                      'Smash_Tracker_Icons/master/png/'
+                      '${player.playerChars.char1}.png'
               ),
             backgroundColor: Color.fromRGBO(77, 144, 152, 1.0),
             radius: 70.0,
@@ -260,17 +259,20 @@ class _PlayerCardState extends State<PlayerCard> {
       children: <Widget>[
         CircleAvatar(
           backgroundImage: NetworkImage(
-              'https://raw.githubusercontent.com/marcrd/smash-ultimate-assets/'
-                  'master/stock-icons/png/${player.playerChars.char1}.png'
+              'https://raw.githubusercontent.com/aking618/'
+                  'Smash_Tracker_Icons/master/png/'
+                  '${player.playerChars.char1}.png'
           ),
           backgroundColor: Color.fromRGBO(77, 144, 152, 1.0),
           radius: 70.0,
         ),
         CircleAvatar(
           backgroundImage: NetworkImage(
-              'https://raw.githubusercontent.com/marcrd/smash-ultimate-assets/'
-                  'master/stock-icons/png/${player.playerChars.char2}.png'
+              'https://raw.githubusercontent.com/aking618/'
+                  'Smash_Tracker_Icons/master/png/'
+                  '${player.playerChars.char2}.png',
           ),
+
           backgroundColor: Color.fromRGBO(77, 144, 152, 1.0),
           radius: 70.0,
         ),

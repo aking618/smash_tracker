@@ -6,7 +6,7 @@ import 'package:smash_tracker/models/playerlist_model.dart';
 PlayerList playerList;
 
 Future<String> _loadPlayerListAsset () async {
-  return await rootBundle.loadString('assets/nebula.json');
+  return await rootBundle.loadString('assets/filler.json');
 }
 
 Future loadPlayerList () async {

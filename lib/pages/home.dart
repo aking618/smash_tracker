@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:smash_tracker/models/playerlist_model.dart';
-import 'package:smash_tracker/pages/player_card.dart';
 import 'package:smash_tracker/services/add_dropdown_service.dart';
 import 'package:smash_tracker/services/json_storage_services.dart';
 
@@ -12,13 +11,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   PlayerList playerList;
-
-  //Todo
-  // Nintendo themed colors
-  // Light themed
-  // Dark themed
-
-  // Blue
 
   @override
   void initState() {
@@ -50,6 +42,29 @@ class _HomeState extends State<Home> {
           'playerList': playerList,
           'index': index
         }
+    );
+  }
+
+  void _showDialog() {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Alert Dialog title"),
+          content: new Text("Alert Dialog body"),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Close"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -118,8 +133,11 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 onTap: () {
-                  // Do Stuff
 
+                  print('hi');
+                  // Do Stuff
+                  _showDialog();
+                  print('after hi');
                   // Close the drawer
                   Navigator.pop(context);
                 },

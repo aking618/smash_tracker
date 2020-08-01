@@ -67,11 +67,17 @@ class _AddPlayerState extends State<AddPlayer> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.grey[400],
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Add Player'),
+        title: Text(
+            'Add Player',
+          style: TextStyle(
+            fontFamily: 'Smash',
+            fontSize: 24.0,
+          ),
+        ),
         centerTitle: true,
-        backgroundColor: Colors.grey[850],
+        backgroundColor: Color.fromRGBO(255, 174, 3, 1.0),
         elevation: 0.0,
       ),
       body: Center(
@@ -84,6 +90,10 @@ class _AddPlayerState extends State<AddPlayer> {
                 decoration: InputDecoration(hintText: 'RandomSmasher47', labelText: 'Player Tag'),
                 controller: textController,
                 keyboardType: TextInputType.text,
+                style: TextStyle(
+                  fontFamily: 'Smash',
+                  color: Color.fromRGBO(77, 144, 152, 1.0)
+                ),
                 validator: (value) =>
                   value.isEmpty ? "Please enter a Player Tag" : null,
                 onSaved: (String value) {
@@ -292,15 +302,15 @@ class _AddPlayerState extends State<AddPlayer> {
                     },
                     {
                       "display": "Mii Brawler",
-                      "value": "mii_brawler",
+                      "value": "mii_fighter",
                     },
                     {
                       "display": "Mii Gunner",
-                      "value": "mii_gunner",
+                      "value": "mii_fighter",
                     },
                     {
                       "display": "Mii Swordfighter",
-                      "value": "mii_swordfighter",
+                      "value": "mii_fighter",
                     },
                     {
                       "display": "Min Min",
@@ -324,7 +334,7 @@ class _AddPlayerState extends State<AddPlayer> {
                     },
                     {
                       "display": "Palutena",
-                      "value": "Palutena",
+                      "value": "palutena",
                     },
                     {
                       "display": "Peach",
@@ -646,15 +656,15 @@ class _AddPlayerState extends State<AddPlayer> {
                     },
                     {
                       "display": "Mii Brawler",
-                      "value": "mii_brawler",
+                      "value": "mii_fighter",
                     },
                     {
                       "display": "Mii Gunner",
-                      "value": "mii_gunner",
+                      "value": "mii_fighter",
                     },
                     {
                       "display": "Mii Swordfighter",
-                      "value": "mii_swordfighter",
+                      "value": "mii_fighter",
                     },
                     {
                       "display": "Min Min",
@@ -678,7 +688,7 @@ class _AddPlayerState extends State<AddPlayer> {
                     },
                     {
                       "display": "Palutena",
-                      "value": "Palutena",
+                      "value": "palutena",
                     },
                     {
                       "display": "Peach",
