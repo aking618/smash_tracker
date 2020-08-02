@@ -45,29 +45,6 @@ class _HomeState extends State<Home> {
     );
   }
 
-  void _showDialog() {
-    // flutter defined function
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return AlertDialog(
-          title: new Text("Alert Dialog title"),
-          content: new Text("Alert Dialog body"),
-          actions: <Widget>[
-            // usually buttons at the bottom of the dialog
-            new FlatButton(
-              child: new Text("Close"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     Future<bool> _onWillPop() async {
@@ -132,12 +109,20 @@ class _HomeState extends State<Home> {
                     color: Color.fromRGBO(77, 114, 152, 1.0),
                   ),
                 ),
-                onTap: () {
-
-                  print('hi');
-                  // Do Stuff
-                  _showDialog();
-                  print('after hi');
+                onTap: () async {
+                  // Show Dialog
+                  await showDialog(context: context, child:
+                    new AlertDialog(
+                      title: new Text(
+                        'About',
+                        style: TextStyle(fontFamily: "Smash"),
+                      ),
+                      content: new Text(
+                        'This is a placeholder. This is a placeholder. This is a placeholder. This is a placeholder.',
+                        style: TextStyle(fontFamily: "Smash"),
+                      ),
+                    )
+                  );
                   // Close the drawer
                   Navigator.pop(context);
                 },
@@ -151,9 +136,20 @@ class _HomeState extends State<Home> {
                     color: Color.fromRGBO(77, 114, 152, 1.0),
                   ),
                 ),
-                onTap: () {
-                  // Do Stuff
-
+                onTap: () async {
+                  // Show Dialog
+                  await showDialog(context: context, child:
+                  new AlertDialog(
+                    title: new Text(
+                      'Feedback',
+                      style: TextStyle(fontFamily: "Smash"),
+                    ),
+                    content: new Text(
+                      'This is a placeholder. This is a placeholder. This is a placeholder. This is a placeholder.',
+                      style: TextStyle(fontFamily: "Smash"),
+                    ),
+                  )
+                  );
                   // Close the drawer
                   Navigator.pop(context);
                 },
@@ -167,9 +163,20 @@ class _HomeState extends State<Home> {
                     color: Color.fromRGBO(77, 114, 152, 1.0),
                   ),
                 ),
-                onTap: () {
-                  // Do Stuff
-
+                onTap: () async {
+                  // Show Dialog
+                  await showDialog(context: context, child:
+                  new AlertDialog(
+                    title: new Text(
+                      'Settings',
+                      style: TextStyle(fontFamily: "Smash"),
+                    ),
+                    content: new Text(
+                      'This is a placeholder. This is a placeholder. This is a placeholder. This is a placeholder.',
+                      style: TextStyle(fontFamily: "Smash"),
+                    ),
+                  )
+                  );
                   // Close the drawer
                   Navigator.pop(context);
                 },
@@ -183,9 +190,20 @@ class _HomeState extends State<Home> {
                     color: Color.fromRGBO(77, 114, 152, 1.0),
                   ),
                 ),
-                onTap: () {
-                  // Do Stuff
-
+                onTap: () async {
+                  // Show Dialog
+                  await showDialog(context: context, child:
+                  new AlertDialog(
+                    title: new Text(
+                      'Support the Developer',
+                      style: TextStyle(fontFamily: "Smash"),
+                    ),
+                    content: new Text(
+                      'This is a placeholder. This is a placeholder. This is a placeholder. This is a placeholder.',
+                      style: TextStyle(fontFamily: "Smash"),
+                    ),
+                  )
+                  );
                   // Close the drawer
                   Navigator.pop(context);
                 },
