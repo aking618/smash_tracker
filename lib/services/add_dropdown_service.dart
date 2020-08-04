@@ -814,7 +814,10 @@ class _AddPlayerState extends State<AddPlayer> {
             Container(
               padding: EdgeInsets.all(8),
               child: RaisedButton(
-                child: Text('Save'),
+                child: Text(
+                    'Save',
+                  style: TextStyle(fontFamily: 'Smash'),
+                ),
                 onPressed: _saveForm,
               ),
             ),

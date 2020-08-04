@@ -1,8 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 import 'package:smash_tracker/models/playerlist_model.dart';
 import 'package:smash_tracker/services/add_dropdown_service.dart';
 import 'package:smash_tracker/services/json_storage_services.dart';
+import 'package:smash_tracker/services/bullet_point.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -43,6 +47,33 @@ class _HomeState extends State<Home> {
           'index': index
         }
     );
+  }
+
+  _launchPaypalURL() async {
+    const url = 'https://paypal.me/AyrenKing';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  _launchReviewURL() async {
+    const url = 'https://paypal.me/AyrenKing';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  _launchPrivacyPolicyURL() async {
+    const url = 'https://paypal.me/AyrenKing';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   @override
@@ -115,12 +146,79 @@ class _HomeState extends State<Home> {
                     new AlertDialog(
                       title: new Text(
                         'About',
-                        style: TextStyle(fontFamily: "Smash"),
+                        style: TextStyle(
+                            fontFamily: "Smash",
+                          color: Color.fromRGBO(77, 114, 152, 1.0)
+                        ),
                       ),
-                      content: new Text(
-                        'This is a placeholder. This is a placeholder. This is a placeholder. This is a placeholder.',
-                        style: TextStyle(fontFamily: "Smash"),
-                      ),
+                      content: new Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          new Text(
+                            "Smash Tracker v1.0",
+                            style: TextStyle(
+                              fontFamily: "Smash",
+                              fontSize: 20.0
+                            ),
+                          ),
+                          new Text(
+                            "Created by: Ayren King",
+                            style: TextStyle(
+                                fontFamily: "Smash",
+                                fontSize: 15.0
+                            ),
+                          ),
+                          new Text(
+                            "ayrockstudios@gmail.com",
+                            style: TextStyle(
+                                fontFamily: "Smash",
+                                fontSize: 15.0
+                            ),
+                          ),
+                          SizedBox(height: 20.0,),
+                          new Text(
+                            "Please review this app on the Google Play Store",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontFamily: "Smash",
+                                fontSize: 15.0
+                            ),
+                          ),
+                          new Container(
+                            padding: EdgeInsets.all(8),
+                            child: RaisedButton(
+                              child: Text(
+                                'Review',
+                                style: TextStyle(
+                                  fontFamily: "Smash",
+                                ),
+                              ),
+                              onPressed: _launchReviewURL,
+                            ),
+                          ),
+                          SizedBox(height: 20.0,),
+                          new Text(
+                            "Privacy Policy:",
+                            style: TextStyle(
+                                fontFamily: "Smash",
+                                fontSize: 15.0
+                            ),
+                          ),
+                          new Container(
+                            padding: EdgeInsets.all(8),
+                            child: RaisedButton(
+                              child: Text(
+                                'Privacy Policy',
+                                style: TextStyle(
+                                  fontFamily: "Smash",
+                                ),
+                              ),
+                              onPressed: _launchPrivacyPolicyURL,
+                            ),
+                          ),
+                        ],
+                      )
                     )
                   );
                   // Close the drawer
@@ -129,7 +227,7 @@ class _HomeState extends State<Home> {
               ),
               ListTile(
                 title: Text(
-                    'Feedback',
+                  'Help',
                   style: TextStyle(
                     fontFamily: 'Smash',
                     fontSize: 15.0,
@@ -141,39 +239,75 @@ class _HomeState extends State<Home> {
                   await showDialog(context: context, child:
                   new AlertDialog(
                     title: new Text(
-                      'Feedback',
-                      style: TextStyle(fontFamily: "Smash"),
+                      'Help',
+                      style: TextStyle(
+                        fontFamily: "Smash",
+                        color: Color.fromRGBO(77, 114, 152, 1.0),
+                      ),
                     ),
-                    content: new Text(
-                      'This is a placeholder. This is a placeholder. This is a placeholder. This is a placeholder.',
-                      style: TextStyle(fontFamily: "Smash"),
-                    ),
-                  )
-                  );
-                  // Close the drawer
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                title: Text(
-                  'Settings',
-                  style: TextStyle(
-                    fontFamily: 'Smash',
-                    fontSize: 15.0,
-                    color: Color.fromRGBO(77, 114, 152, 1.0),
-                  ),
-                ),
-                onTap: () async {
-                  // Show Dialog
-                  await showDialog(context: context, child:
-                  new AlertDialog(
-                    title: new Text(
-                      'Settings',
-                      style: TextStyle(fontFamily: "Smash"),
-                    ),
-                    content: new Text(
-                      'This is a placeholder. This is a placeholder. This is a placeholder. This is a placeholder.',
-                      style: TextStyle(fontFamily: "Smash"),
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        new Text(
+                          'Home Page',
+                          style: TextStyle(fontFamily: "Smash"),
+                        ),
+                        DottedText(
+                          "Tap the plus icon to add players",
+                          style: TextStyle(fontFamily: "Smash", fontSize: 13.0),
+                        ),
+                        DottedText(
+                          'All players added are visible',
+                          style: TextStyle(fontFamily: "Smash", fontSize: 13.0),
+                        ),
+                        DottedText(
+                          "Tap the player to go to that specific player's card",
+                          style: TextStyle(fontFamily: "Smash", fontSize: 13.0),
+                        ),
+//                        DottedText(
+//                          "Edit Icon (Tap to edit the player tag or player characters",
+//                          style: TextStyle(fontFamily: "Smash", fontSize: 13.0),
+//                        ),
+                        DottedText(
+                          "Delete Icon (Tap to remove player from list)",
+                          style: TextStyle(fontFamily: "Smash", fontSize: 13.0),
+                        ),
+                        SizedBox(height: 15.0,),
+                        new Text(
+                          'Add Player Page',
+                          style: TextStyle(fontFamily: "Smash"),
+                        ),
+                        DottedText(
+                          'Type desired player tag',
+                          style: TextStyle(fontFamily: "Smash", fontSize: 13.0),
+                        ),
+                        DottedText(
+                          "Choose player characters (Only one character is required)",
+                          style: TextStyle(fontFamily: "Smash", fontSize: 13.0),
+                        ),
+                        SizedBox(height: 15.0,),
+                        new Text(
+                          'Player Card Page',
+                          style: TextStyle(fontFamily: "Smash"),
+                        ),
+                        DottedText(
+                          "NOTES (type player notes by tapping the text line)",
+                          style: TextStyle(fontFamily: "Smash", fontSize: 13.0),
+                        ),
+                        DottedText(
+                          'WIN (increase win count)',
+                          style: TextStyle(fontFamily: "Smash", fontSize: 13.0),
+                        ),
+                        DottedText(
+                          "LOSE (increase lose count)",
+                          style: TextStyle(fontFamily: "Smash", fontSize: 13.0),
+                        ),
+                        DottedText(
+                          "RESET (reset win/lose count)",
+                          style: TextStyle(fontFamily: "Smash", fontSize: 13.0),
+                        ),
+                      ],
                     ),
                   )
                   );
@@ -196,11 +330,34 @@ class _HomeState extends State<Home> {
                   new AlertDialog(
                     title: new Text(
                       'Support the Developer',
-                      style: TextStyle(fontFamily: "Smash"),
+                      style: TextStyle(
+                        fontFamily: "Smash",
+                        color: Color.fromRGBO(77, 114, 152, 1.0),
+                      ),
                     ),
-                    content: new Text(
-                      'This is a placeholder. This is a placeholder. This is a placeholder. This is a placeholder.',
-                      style: TextStyle(fontFamily: "Smash"),
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        new Text(
+                          'If you want to support the developer, please use the button.',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: "Smash",
+                          ),
+                        ),
+                        new Container(
+                          padding: EdgeInsets.all(8),
+                          child: RaisedButton(
+                            child: Text(
+                              'Support the Developer',
+                              style: TextStyle(
+                                fontFamily: "Smash",
+                              ),
+                            ),
+                            onPressed: _launchPaypalURL,
+                          ),
+                        ),
+                      ],
                     ),
                   )
                   );
@@ -250,10 +407,10 @@ class _HomeState extends State<Home> {
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.edit),
-                      ),
+//                      IconButton(
+//                        onPressed: () {},
+//                        icon: Icon(Icons.edit),
+//                      ),
                       IconButton(
                         onPressed: () async {
                           removePlayer(index);
