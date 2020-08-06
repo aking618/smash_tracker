@@ -39,11 +39,37 @@ class _PlayerCardState extends State<PlayerCard> {
       setState(() {
         winCount += 1;
         playerList.players[index].playerSetCount = "$winCount - $loseCount";
+
+        List<String> notes = playerList.players[index].playerNotes.split('\n');
+        String combinedNotes = "";
+        for (int i = 0; i < notes.length; i++) {
+          if (i == notes.length - 1) {
+            combinedNotes += notes[i];
+          } else {
+            combinedNotes += '${notes[i]}\n';
+          }
+        }
+        combinedNotes = combinedNotes.split('\n').join('\\n');
+
+        playerList.players[index].playerNotes = combinedNotes;
       });
     } else if (type == 'lose') {
       setState(() {
         loseCount += 1;
         playerList.players[index].playerSetCount = "$winCount - $loseCount";
+
+        List<String> notes = playerList.players[index].playerNotes.split('\n');
+        String combinedNotes = "";
+        for (int i = 0; i < notes.length; i++) {
+          if (i == notes.length - 1) {
+            combinedNotes += notes[i];
+          } else {
+            combinedNotes += '${notes[i]}\n';
+          }
+        }
+        combinedNotes = combinedNotes.split('\n').join('\\n');
+
+        playerList.players[index].playerNotes = combinedNotes;
       });
     } else {
       showDialog(
@@ -63,20 +89,47 @@ class _PlayerCardState extends State<PlayerCard> {
               ],
             );
           }).then((exit) {
-        if (exit == null) return;
+        if (exit == null)
+          setState(() {
+            List<String> notes = playerList.players[index].playerNotes.split('\n');
+            String combinedNotes = "";
+            for (int i = 0; i < notes.length; i++) {
+              if (i == notes.length - 1) {
+                combinedNotes += notes[i];
+              } else {
+                combinedNotes += '${notes[i]}\n';
+              }
+            }
+            combinedNotes = combinedNotes.split('\n').join('\\n');
+
+            playerList.players[index].playerNotes = combinedNotes;
+          });
 
         if (exit) {
           setState(() {
             winCount = loseCount = 0;
             playerList.players[index].playerSetCount = "$winCount - $loseCount";
+
+            List<String> notes = playerList.players[index].playerNotes.split('\n');
+            String combinedNotes = "";
+            for (int i = 0; i < notes.length; i++) {
+              if (i == notes.length - 1) {
+                combinedNotes += notes[i];
+              } else {
+                combinedNotes += '${notes[i]}\n';
+              }
+            }
+            combinedNotes = combinedNotes.split('\n').join('\\n');
+
+            playerList.players[index].playerNotes = combinedNotes;
           });
           writePlayerData(playerList);
         }
       });
     }
     writePlayerData(playerList);
-    print(PlayerListtoJson(playerList));
-    print(player.playerSetCount);
+    //print(PlayerListtoJson(playerList));
+    //print(player.playerSetCount);
   }
 
 
@@ -90,9 +143,21 @@ class _PlayerCardState extends State<PlayerCard> {
 
     setState(() {
       getWinLoseCount(player);
-      _notesController.text = playerList.players[index].playerNotes;
+      _notesController.text = playerList.players[index].playerNotes.replaceAll('\\n', '\n');
       _notesController.selection = TextSelection.fromPosition(
           TextPosition(offset: _notesController.text.length));
+      List<String> notes = playerList.players[index].playerNotes.split('\n');
+      String combinedNotes = "";
+      for (int i = 0; i < notes.length; i++) {
+        if (i == notes.length - 1) {
+          combinedNotes += notes[i];
+        } else {
+          combinedNotes += '${notes[i]}\n';
+        }
+      }
+      combinedNotes = combinedNotes.split('\n').join('\\n');
+
+      playerList.players[index].playerNotes = combinedNotes;
     });
 
 
@@ -212,7 +277,19 @@ class _PlayerCardState extends State<PlayerCard> {
                             obscureText: false,
                             maxLines: null,
                             onChanged: (value) {
-                              playerList.players[index].playerNotes = value;
+                              List<String> notes = value.split('\n');
+                              String combinedNotes = "";
+                              for (int i = 0; i < notes.length; i++) {
+                                if (i == notes.length - 1) {
+                                  combinedNotes += notes[i];
+                                } else {
+                                  combinedNotes += '${notes[i]}\n';
+                                }
+                              }
+                              combinedNotes = combinedNotes.split('\n').join('\\n');
+
+                              playerList.players[index].playerNotes = combinedNotes;
+                              print(playerList.players[index].playerNotes.trim());
                               writePlayerData(playerList);
                             },
                             style: TextStyle(

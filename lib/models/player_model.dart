@@ -38,7 +38,7 @@ String playerToJson(List<Player> players) {
     playerString += '{"id": "${players[i].playerId}",'
         '"setCount": "${players[i].playerSetCount}",'
         '"characters": ${characterToJson(players[i].playerChars)}'
-        '"notes": "${players[i].playerNotes}"}';
+        '"notes": "${players[i].playerNotes.split('\n').join('\\n')}"}';
 
     if (!(i == players.length - 1)) {
       playerString += ',';

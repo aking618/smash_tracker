@@ -68,7 +68,7 @@ class _HomeState extends State<Home> {
   }
 
   _launchPrivacyPolicyURL() async {
-    const url = 'https://paypal.me/AyrenKing';
+    const url = 'https://stillwatersmash.github.io/pages/privacypolicy.html';
     if (await canLaunch(url)) {
       await launch(url);
     } else {

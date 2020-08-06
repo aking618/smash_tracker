@@ -13,7 +13,7 @@ Future<String> get _localPath async {
 
 Future<File> get _localFile async {
   final path = await _localPath;
-  print(path);
+  //print(path);
   return File('$path/playerData.json');
 }
 
