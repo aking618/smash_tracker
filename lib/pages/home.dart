@@ -49,14 +49,14 @@ class _HomeState extends State<Home> {
     );
   }
 
-  _launchPaypalURL() async {
-    const url = 'https://paypal.me/AyrenKing';
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
+//  _launchPaypalURL() async {
+//    const url = 'https://paypal.me/AyrenKing';
+//    if (await canLaunch(url)) {
+//      await launch(url);
+//    } else {
+//      throw 'Could not launch $url';
+//    }
+//  }
 
   _launchReviewURL() async {
     const url = 'https://paypal.me/AyrenKing';
@@ -156,7 +156,7 @@ class _HomeState extends State<Home> {
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
                           new Text(
-                            "Smash Tracker v1.0",
+                            "Smash Tracker v1.2",
                             style: TextStyle(
                               fontFamily: "Smash",
                               fontSize: 20.0
@@ -315,56 +315,46 @@ class _HomeState extends State<Home> {
                   Navigator.pop(context);
                 },
               ),
-              ListTile(
-                title: Text(
-                  'Support the Developer',
-                  style: TextStyle(
-                    fontFamily: 'Smash',
-                    fontSize: 15.0,
-                    color: Color.fromRGBO(77, 114, 152, 1.0),
-                  ),
-                ),
-                onTap: () async {
-                  // Show Dialog
-                  await showDialog(context: context, child:
-                  new AlertDialog(
-                    title: new Text(
-                      'Support the Developer',
-                      style: TextStyle(
-                        fontFamily: "Smash",
-                        color: Color.fromRGBO(77, 114, 152, 1.0),
-                      ),
-                    ),
-                    content: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        new Text(
-                          'If you want to support the developer, please use the button.',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontFamily: "Smash",
-                          ),
-                        ),
-                        new Container(
-                          padding: EdgeInsets.all(8),
-                          child: RaisedButton(
-                            child: Text(
-                              'Support the Developer',
-                              style: TextStyle(
-                                fontFamily: "Smash",
-                              ),
-                            ),
-                            onPressed: _launchPaypalURL,
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                  );
-                  // Close the drawer
-                  Navigator.pop(context);
-                },
-              ),
+//              ListTile(
+//                title: Text(
+//                  'Support the Developer',
+//                  style: TextStyle(
+//                    fontFamily: 'Smash',
+//                    fontSize: 15.0,
+//                    color: Color.fromRGBO(77, 114, 152, 1.0),
+//                  ),
+//                ),
+//                onTap: () async {
+//                  // Show Dialog
+//                  await showDialog(context: context, child:
+//                  new AlertDialog(
+//                    title: new Text(
+//                      'Support the Developer',
+//                      style: TextStyle(
+//                        fontFamily: "Smash",
+//                        color: Color.fromRGBO(77, 114, 152, 1.0),
+//                      ),
+//                    ),
+//                    content: Column(
+//                      mainAxisSize: MainAxisSize.min,
+//                      children: <Widget>[
+//                        new Text(
+//                          'If you want to support the developer,\ndonate here: '
+//                              'https://paypal.me/AyrenKing\n\n'
+//                              'Or follow me on twitch:'
+//                              ' Awesome8800',
+//                            style: TextStyle(
+//                            fontFamily: "Smash",
+//                          ),
+//                        ),
+//                      ],
+//                    ),
+//                  )
+//                  );
+//                  // Close the drawer
+//                  Navigator.pop(context);
+//                },
+//              ),
             ],
           ),
         ),

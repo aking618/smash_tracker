@@ -413,6 +413,10 @@ class _AddPlayerState extends State<AddPlayer> {
                       "value": "sonic",
                     },
                     {
+                      "display": "Steve",
+                      "value": "steve",
+                    },
+                    {
                       "display": "Terry",
                       "value": "terry",
                     },
@@ -765,6 +769,10 @@ class _AddPlayerState extends State<AddPlayer> {
                     {
                       "display": "Sonic",
                       "value": "sonic",
+                    },
+                    {
+                      "display": "Steve",
+                      "value": "steve",
                     },
                     {
                       "display": "Terry",
